@@ -10,5 +10,14 @@ export function useEventPageScreen(eventId: string) {
     if (event?.ticket_url) Linking.openURL(event.ticket_url);
   }, [event?.ticket_url]);
 
-  return { event, openTickets };
+  const openRoute = useCallback(() => {
+    if (!event) return;
+
+    const query = encodeURIComponent(`${event.city} ${event.venue}`);
+    const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
+
+    Linking.openURL(url);
+  }, [event]);
+
+  return { event, openTickets, openRoute };
 }

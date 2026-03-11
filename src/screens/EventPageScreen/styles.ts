@@ -69,16 +69,36 @@ export const styles = StyleSheet.create({
     paddingBottom: 24,
     backgroundColor: '#0f0f12',
   },
+  bottomBarRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: 12,
+  },
   button: {
     backgroundColor: '#6366f1',
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: 'center',
+    flex: 1,
   },
   buttonText: {
     fontSize: 17,
     fontWeight: '600',
     color: '#fff',
+  },
+  secondaryButton: {
+    flex: 1,
+    paddingVertical: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#27272f',
+    alignItems: 'center',
+    backgroundColor: '#111827',
+  },
+  secondaryButtonText: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#e5e7eb',
   },
   error: {
     color: '#888',

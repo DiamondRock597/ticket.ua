@@ -3,8 +3,17 @@
     "cities": "Cities",
     "events": "Events",
     "search": "Search",
+    "map": "Map",
     "filters": "Filters",
     "settings": "Settings"
+  },
+  "map": {
+    "title": "Events map",
+    "you": "You are here",
+    "centerOnMe": "My location",
+    "loadingLocation": "Fetching your location…",
+    "locationInfo": "Allow location access to see yourself on the map",
+    "locationDenied": "Location access is disabled"
   },
   "city": {
     "title": "Cities",
@@ -19,6 +28,7 @@
   },
   "eventPage": {
     "buyTicket": "Buy ticket",
+    "showRoute": "Show route",
     "venue": "Venue",
     "description": "Description",
     "notFound": "Event not found"
@@ -44,6 +54,11 @@
       "music": "Music",
       "business": "Business",
       "theatre": "Theatre"
+    },
+    "sortTitle": "Sort by",
+    "sort": {
+      "dateAsc": "Nearest first",
+      "dateDesc": "Farthest first"
     },
     "empty": "Nothing found for this query"
   },

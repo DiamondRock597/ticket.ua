@@ -23,7 +23,7 @@ type Props = {
 export function EventPageScreen({ eventId }: Props) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { event, openTickets } = useEventPageScreen(eventId);
+  const { event, openTickets, openRoute } = useEventPageScreen(eventId);
   const scrollY = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -77,13 +77,24 @@ export function EventPageScreen({ eventId }: Props) {
         </Animated.View>
       </Animated.ScrollView>
       <View style={[styles.bottomBar, { paddingBottom: insets.bottom + 16 }]}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={openTickets}
-          activeOpacity={0.85}
-        >
-          <Text style={styles.buttonText}>{t('eventPage.buyTicket')}</Text>
-        </TouchableOpacity>
+        <View style={styles.bottomBarRow}>
+          <TouchableOpacity
+            style={styles.secondaryButton}
+            onPress={openRoute}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.secondaryButtonText}>
+              {t('eventPage.showRoute')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={openTickets}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.buttonText}>{t('eventPage.buyTicket')}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

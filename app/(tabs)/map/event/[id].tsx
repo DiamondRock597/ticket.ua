@@ -1,7 +1,8 @@
 import { useLocalSearchParams } from 'expo-router';
 import { EventPageScreen } from '@/src/screens/EventPageScreen';
 
-export default function EventsEventPage() {
+export default function MapEventPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   return <EventPageScreen eventId={id ?? ''} />;
 }
+

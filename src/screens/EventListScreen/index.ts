@@ -1,1 +1,0 @@
-export { EventListScreen } from './EventListScreen';

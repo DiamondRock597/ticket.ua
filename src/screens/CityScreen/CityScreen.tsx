@@ -5,6 +5,7 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
@@ -65,6 +66,16 @@ export function CityScreen() {
   const { cities, handleCityPress } = useCityScreen();
   const topEvents = useAppSelector(selectTopEvents);
 
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    // In a real app this is where you'd refetch cities/top events from an API
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 700);
+  }, []);
+
   const handleTopEventPress = (event: Event) => {
     router.push(`/cities/event/${event.id}`);
   };
@@ -122,6 +133,8 @@ export function CityScreen() {
         )}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
       />
     </View>
   );

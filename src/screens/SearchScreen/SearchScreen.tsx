@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Modal,
+  Pressable,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,14 +15,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 import { useAppSelector } from '@/src/store/hooks';
-import { selectEvents } from '@/src/store/eventsSlice';
+import { selectFilteredEvents } from '@/src/store/eventsSlice';
 import type { Event } from '@/src/types/event';
 import { HeaderBar } from '@/src/components/HeaderBar';
 import { EventCard } from '@/src/screens/EventListScreen/components/EventCard';
+import { FiltersScreen } from '@/src/screens/FiltersScreen/FiltersScreen';
 
 import { styles } from './styles';
 
 type CategoryKey = 'all' | 'music' | 'business' | 'theatre';
+type SortKey = 'dateAsc' | 'dateDesc';
 
 const CATEGORY_ORDER: CategoryKey[] = ['all', 'music', 'business', 'theatre'];
 
@@ -28,14 +32,17 @@ export function SearchScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const events = useAppSelector(selectEvents);
+  const events = useAppSelector(selectFilteredEvents);
 
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
+  const [sortKey, setSortKey] = useState<SortKey>('dateAsc');
+  const [refreshing, setRefreshing] = useState(false);
+  const [filtersVisible, setFiltersVisible] = useState(false);
 
   const onPressEvent = useCallback(
     (event: Event) => {
-      router.push(`/events/event/${event.id}`);
+      router.push(`/search/event/${event.id}`);
     },
     [router]
   );
@@ -43,7 +50,7 @@ export function SearchScreen() {
   const filteredEvents = useMemo(() => {
     const q = query.trim().toLowerCase();
 
-    return events.filter((event) => {
+    const filtered = events.filter((event) => {
       if (activeCategory !== 'all' && event.category !== activeCategory) {
         return false;
       }
@@ -57,12 +64,66 @@ export function SearchScreen() {
         ' ' +
         event.city +
         ' ' +
-        event.venue
+        event.venue +
+        ' ' +
+        (event.address ?? '')
       ).toLowerCase();
 
       return haystack.includes(q);
     });
-  }, [events, query, activeCategory]);
+
+    return filtered
+      .slice()
+      .sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+
+        if (sortKey === 'dateAsc') {
+          return dateA - dateB;
+        }
+
+        return dateB - dateA;
+      });
+  }, [events, query, activeCategory, sortKey]);
+
+  const suggestions = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+
+    const seen = new Set<string>();
+
+    return events
+      .filter((event) => {
+        const haystack = (
+          event.title +
+          ' ' +
+          event.description +
+          ' ' +
+          event.city +
+          ' ' +
+          event.venue +
+          ' ' +
+          (event.address ?? '')
+        ).toLowerCase();
+
+        return haystack.includes(q);
+      })
+      .filter((event) => {
+        const key = `${event.title}-${event.city}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .slice(0, 6);
+  }, [events, query]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // In a real app this is where you'd refetch events from an API
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 700);
+  }, []);
 
   const renderCategoryChip = (key: CategoryKey) => {
     const isActive = activeCategory === key;
@@ -90,7 +151,19 @@ export function SearchScreen() {
 
   return (
     <View style={styles.container}>
-      <HeaderBar title={t('search.title')} showBack={false} />
+      <HeaderBar
+        title={t('search.title')}
+        showBack={false}
+        right={
+          <TouchableOpacity
+            onPress={() => setFiltersVisible(true)}
+            style={styles.filterBtn}
+            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+          >
+            <Ionicons name="options-outline" size={24} color="#fff" />
+          </TouchableOpacity>
+        }
+      />
       <View style={[styles.content, { paddingBottom: insets.bottom + 8 }]}>
         <View style={styles.searchContainer}>
           <Ionicons
@@ -120,6 +193,33 @@ export function SearchScreen() {
           )}
         </View>
 
+        {query.length > 0 && suggestions.length > 0 && (
+          <View style={styles.suggestionsContainer}>
+            {suggestions.map((event) => (
+              <TouchableOpacity
+                key={event.id}
+                style={styles.suggestionItem}
+                onPress={() => setQuery(event.title)}
+              >
+                <Ionicons
+                  name="search"
+                  size={16}
+                  color="#9ca3af"
+                  style={styles.suggestionIcon}
+                />
+                <View style={styles.suggestionTextWrapper}>
+                  <Text style={styles.suggestionTitle} numberOfLines={1}>
+                    {event.title}
+                  </Text>
+                  <Text style={styles.suggestionMeta} numberOfLines={1}>
+                    {event.city} • {event.venue}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+
         <View style={styles.categoriesWrapper}>
           <Text style={styles.categoriesTitle}>
             {t('search.categoriesTitle')}
@@ -141,11 +241,71 @@ export function SearchScreen() {
           )}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           ListEmptyComponent={
             <Text style={styles.empty}>{t('search.empty')}</Text>
           }
         />
       </View>
+
+      <Modal
+        visible={filtersVisible}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setFiltersVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalHeader, { paddingTop: insets.top + 8 }]}>
+            <Text style={styles.modalTitle}>{t('filters.title')}</Text>
+            <Pressable
+              onPress={() => setFiltersVisible(false)}
+              style={styles.modalClose}
+              hitSlop={12}
+            >
+              <Ionicons name="close" size={28} color="#fff" />
+            </Pressable>
+          </View>
+          <FiltersScreen onApply={() => setFiltersVisible(false)} variant="modal" />
+          <View style={styles.sortWrapper}>
+            <Text style={styles.sortTitle}>{t('search.sortTitle')}</Text>
+            <View style={styles.sortChipsRow}>
+              <TouchableOpacity
+                style={[
+                  styles.sortChip,
+                  sortKey === 'dateAsc' && styles.sortChipActive,
+                ]}
+                onPress={() => setSortKey('dateAsc')}
+              >
+                <Text
+                  style={[
+                    styles.sortChipText,
+                    sortKey === 'dateAsc' && styles.sortChipTextActive,
+                  ]}
+                >
+                  {t('search.sort.dateAsc')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.sortChip,
+                  sortKey === 'dateDesc' && styles.sortChipActive,
+                ]}
+                onPress={() => setSortKey('dateDesc')}
+              >
+                <Text
+                  style={[
+                    styles.sortChipText,
+                    sortKey === 'dateDesc' && styles.sortChipTextActive,
+                  ]}
+                >
+                  {t('search.sort.dateDesc')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

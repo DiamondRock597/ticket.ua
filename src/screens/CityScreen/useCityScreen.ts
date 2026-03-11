@@ -1,17 +1,19 @@
 import { useCallback } from 'react';
 import { useRouter } from 'expo-router';
-import { useAppSelector } from '@/src/store/hooks';
-import { selectCities } from '@/src/store/eventsSlice';
+import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
+import { selectCities, setFilters } from '@/src/store/eventsSlice';
 
 export function useCityScreen() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const cities = useAppSelector(selectCities);
 
   const handleCityPress = useCallback(
     (city: string) => {
-      router.push({ pathname: '/cities/event-list', params: { city } });
+      dispatch(setFilters({ city }));
+      router.push('/search');
     },
-    [router]
+    [dispatch, router]
   );
 
   return { cities, handleCityPress };

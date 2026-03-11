@@ -22,7 +22,8 @@ function filterEvents(list: Event[], filters: EventsFilters): Event[] {
       const match =
         event.title.toLowerCase().includes(q) ||
         event.description.toLowerCase().includes(q) ||
-        event.venue.toLowerCase().includes(q);
+        event.venue.toLowerCase().includes(q) ||
+        (event.address && event.address.toLowerCase().includes(q));
       if (!match) return false;
     }
     if (filters.dateFrom && event.date < filters.dateFrom) return false;

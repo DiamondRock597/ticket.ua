@@ -70,6 +70,14 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="search"
+        options={{
+          title: t('tabs.search'),
+          href: '/search',
+          tabBarIcon: ({ focused }) => <TabIcon name="search" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
         name="events"
         options={{
           title: t('tabs.events'),
@@ -78,11 +86,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="search"
+        name="map"
         options={{
-          title: t('tabs.search'),
-          href: '/search',
-          tabBarIcon: ({ focused }) => <TabIcon name="search" focused={focused} />,
+          title: t('tabs.map'),
+          href: '/map',
+          tabBarIcon: ({ focused }) => <TabIcon name="map" focused={focused} />,
         }}
       />
       {/* <Tabs.Screen

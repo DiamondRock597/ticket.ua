@@ -1,0 +1,20 @@
+{
+  "extends": "expo/tsconfig.base",
+  "baseUrl": ".",
+  "resolveJsonModule": true,
+  "jsx": "react-jsx",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
+}

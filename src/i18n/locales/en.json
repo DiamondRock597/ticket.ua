@@ -1,0 +1,55 @@
+{
+  "tabs": {
+    "cities": "Cities",
+    "events": "Events",
+    "search": "Search",
+    "filters": "Filters",
+    "settings": "Settings"
+  },
+  "city": {
+    "title": "Cities",
+    "subtitle": "Choose a city to view events",
+    "topEvents": "Top events",
+    "citiesSection": "Cities"
+  },
+  "events": {
+    "all": "All events",
+    "byCity": "Events: {{city}}",
+    "empty": "No events found"
+  },
+  "eventPage": {
+    "buyTicket": "Buy ticket",
+    "venue": "Venue",
+    "description": "Description",
+    "notFound": "Event not found"
+  },
+  "filters": {
+    "title": "Filters",
+    "search": "Search",
+    "searchPlaceholder": "Title, description, venue...",
+    "city": "City",
+    "all": "All",
+    "dateFrom": "Date from",
+    "dateTo": "Date to",
+    "datePlaceholder": "YYYY-MM-DD",
+    "reset": "Reset",
+    "apply": "Apply"
+  },
+  "search": {
+    "title": "Search events",
+    "inputPlaceholder": "Title, description, venue...",
+    "categoriesTitle": "Categories",
+    "categories": {
+      "all": "All",
+      "music": "Music",
+      "business": "Business",
+      "theatre": "Theatre"
+    },
+    "empty": "Nothing found for this query"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageValue": "Українська / English"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "tabs": {
+    "cities": "Міста",
+    "events": "Події",
+    "search": "Пошук",
+    "filters": "Фільтри",
+    "settings": "Налаштування"
+  },
+  "city": {
+    "title": "Міста",
+    "subtitle": "Оберіть місто для перегляду подій",
+    "topEvents": "Топ подій",
+    "citiesSection": "Міста"
+  },
+  "events": {
+    "all": "Усі події",
+    "byCity": "Події: {{city}}",
+    "empty": "Подій не знайдено"
+  },
+  "eventPage": {
+    "buyTicket": "Купити квиток",
+    "venue": "Місце",
+    "description": "Опис",
+    "notFound": "Подію не знайдено"
+  },
+  "filters": {
+    "title": "Фільтри",
+    "search": "Пошук",
+    "searchPlaceholder": "Назва, опис, місце...",
+    "city": "Місто",
+    "all": "Усі",
+    "dateFrom": "Дата від",
+    "dateTo": "Дата до",
+    "datePlaceholder": "YYYY-MM-DD",
+    "reset": "Скинути",
+    "apply": "Застосувати"
+  },
+  "search": {
+    "title": "Пошук подій",
+    "inputPlaceholder": "Назва, опис, місце...",
+    "categoriesTitle": "Категорії",
+    "categories": {
+      "all": "Усі",
+      "music": "Музика",
+      "business": "Бізнес",
+      "theatre": "Театр"
+    },
+    "empty": "Нічого не знайдено за запитом"
+  },
+  "settings": {
+    "title": "Налаштування",
+    "language": "Мова",
+    "languageValue": "Українська / English"
+  }
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1",
+    "title": "Океан Ельзи — 25 років разом",
+    "date": "2025-04-15T19:00:00",
+    "city": "Київ",
+    "venue": "Палац «Україна»",
+    "description": "Ювілейний концерт гурту Океан Ельзи. 25 років на сцені — найкращі хіти та прем'єри.",
+    "image": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800",
+    "ticket_url": "https://concert.ua/ru/event/ocean-elzy-25",
+    "category": "music"
+  },
+  {
+    "id": "2",
+    "title": "DZIDZIO — Мегатур",
+    "date": "2025-05-20T20:00:00",
+    "city": "Львів",
+    "venue": "Arena Lviv",
+    "description": "Масштабний концерт DZIDZIO з новою програмою та візуальними ефектами.",
+    "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
+    "ticket_url": "https://concert.ua/ru/event/dzidzio",
+    "category": "music"
+  },
+  {
+    "id": "3",
+    "title": "Форум «Інновації в бізнесі»",
+    "date": "2025-03-25T09:00:00",
+    "city": "Київ",
+    "venue": "Парк «Київ Експо Плаза»",
+    "description": "Щорічний бізнес-форум: нетворкінг, доповіді та воркшопи від лідерів ринку.",
+    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800",
+    "ticket_url": "https://example.com/forum-2025",
+    "category": "business"
+  },
+  {
+    "id": "4",
+    "title": "Балет «Лускунчик»",
+    "date": "2025-12-20T18:00:00",
+    "city": "Одеса",
+    "venue": "Одеський театр опери та балету",
+    "description": "Класична постановка балету П. І. Чайковського у виконанні трупи театру.",
+    "image": "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800",
+    "ticket_url": "https://example.com/nutcracker-odessa",
+    "category": "theatre"
+  },
+  {
+    "id": "5",
+    "title": "Jazz на Подолі",
+    "date": "2025-06-10T19:30:00",
+    "city": "Київ",
+    "venue": "Art Club «Будда-бар»",
+    "description": "Вечір джазу з українськими та зарубіжними виконавцями. Open air.",
+    "image": "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=800",
+    "ticket_url": "https://example.com/jazz-podol",
+    "category": "music"
+  }
+]
